@@ -6,3 +6,20 @@ $('[data-toggle=offcanvas]').click(function() {
   $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
   $('#btnShow').toggle();
 });
+
+$(document).on('turbolinks:load', function(){
+  setTimeout(function(){
+    $('#flash').remove();
+  }, 3000);
+
+  $('#user_img').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('should be less than 5MB');
+    }
+  });
+  $('.btn-pref .btn').click(function () {
+    $('.btn-pref .btn').removeClass('btn-primary').addClass('btn-default');
+    $(this).removeClass('btn-default').addClass('btn-primary');   
+  });
+});

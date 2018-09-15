@@ -5,6 +5,7 @@ ruby "2.5.1"
 
 gem "coffee-rails", "~> 4.2"
 gem "devise"
+gem "font-awesome-rails"
 gem "jbuilder", "~> 2.5"
 gem "puma", "~> 3.11"
 gem "rails", "~> 5.2.1"
@@ -12,7 +13,6 @@ gem "rubocop", "~> 0.54.0", require: false
 gem "sass-rails", "~> 5.0"
 gem "turbolinks", "~> 5"
 gem "uglifier", ">= 1.3.0"
-gem "font-awesome-rails"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "bootstrap-kaminari-views"

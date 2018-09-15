@@ -1,29 +1,80 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="container" style="margin-top:40px">
+  <div class="row">
+    <div class="col-sm-8 col-md-6 col-md-offset-3" >
+      <div class="panel panel-default">
+        <div class="panel-heading" style="text-align:center">
+          <strong> Sign up to continue</strong>
+        </div>
+        <div class="panel-body">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "shared/error_messages", object: f.object %>  
+            <fieldset>
+              <div class="row">
+                <div class="center-block">
+                  <%= image_tag "user1.png", class: "profile-img",
+                    accept: "image/jpeg,image/gif,image/png", id: "user_img" %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-user"></i>
+                      </span>
+                      <%= f.text_field :name, autofocus: true, autocomplete: "name",
+                        class: "form-control", placeholder: "Name" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-inbox"></i>
+                      </span>
+                      <%= f.email_field :email, autofocus: true,
+                        class: "form-control", placeholder: "Email" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-lock"></i>
+                      </span>
+                      <%= f.password_field :password, autofocus: true, autocomplete: "password",
+                        class: "form-control", placeholder: "Password" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-lock"></i>
+                      </span>
+                      <%= f.password_field :password_confirmation, autocomplete: "password_confirmation",
+                        class: "form-control", placeholder: "Password Confirmation" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-file-image-o"></i>
+                      </span>
+                      <%= f.file_field :image, autocomplete: "image",
+                        class: "form-control" %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.submit "Sign up", class: "btn btn-lg btn-primary btn-block" %>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          <% end %>
+        </div>
+        <div class="panel-footer ">
+          If you have an account! 
+          <%= link_to "Login Here", new_user_session_path %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>
