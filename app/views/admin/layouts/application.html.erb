@@ -11,14 +11,14 @@
 
   <body>
     <div class="container">
+      <%= render "admin/layouts/header" %>
       <div id="flash" style="text-align: center">
         <% flash.each do |message_type, message| %>
-          <div class="alert alert-<%= message_type %>">
+          <div style="background-color:darkgreen;color:white">
             <%= message %>
           </div>
         <% end %>
       </div>
-      <%= render "admin/layouts/header" %>
       <div id="wrapper">
         <%= render "admin/layouts/sidebar" %>
         <%= yield %>

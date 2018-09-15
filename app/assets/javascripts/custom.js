@@ -8,9 +8,25 @@ $('[data-toggle=offcanvas]').click(function() {
 });
 
 $(document).on('turbolinks:load', function(){
-  $('.like_new').click(function(){
+  $('.load_article').scroll(function(){
+    if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
+      var last_id = $('.post-id:last').attr('id');
+      $.ajax({
+        url: '/load_more_data',
+        method: 'get',
+        data: {last_id: last_id},
+        dataType: 'json',
+        success: function(data){
+          $('.ajax-load').hide();
+          $('#post-data').append(data.html);
+          console.log(data.html);
+        }
+      });
+    }
+  });
+  $('body').on('click', '.like_new', function() {
     var user_id = $(this).siblings('.user_id').val();
-    var new_id = $(this).siblings('.new_id').val();
+    var article_id = $(this).siblings('.article_id').val();
     var number_one = parseInt($(this).siblings('.number_one').val());
     var number_tow = parseInt($(this).siblings('.number_tow').val());
     if(number_one == 0){
@@ -23,11 +39,11 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/like_status',
         method: 'get',
-        data: {user_id: user_id, new_id: new_id, number_one: 0, number_tow: 1},
+        data: {user_id: user_id, article_id: article_id, number_one: 0, number_tow: 1},
         dataType: 'json',
         success: function(data){
           console.log(data.html);
-          $('#dat_'+new_id).html(data.html);
+          $('#dat_'+article_id).html(data.html);
         }
       });
     }else{
@@ -40,18 +56,18 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/revoke_status',
         method: 'get',
-        data: {user_id: user_id, new_id: new_id, number: 1},
+        data: {user_id: user_id, article_id: article_id, number: 1},
         dataType: 'json',
         success: function(data){
-          $('#dat_'+new_id).html(data.html);
+          $('#dat_'+article_id).html(data.html);
         }
       });
     }
   });
 
-  $('.unlike_new').click(function(){
+  $('body').on('click', '.unlike_new', function() {
     var user_id = $(this).siblings('.user_id').val();
-    var new_id = $(this).siblings('.new_id').val();
+    var article_id = $(this).siblings('.article_id').val();
     var number_tow = parseInt($(this).siblings('.number_tow').val());
     if(number_tow == 0){
       $(this).css('background-color', 'blue');
@@ -63,10 +79,10 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/like_status',
         method: 'get',
-        data: {user_id: user_id, new_id: new_id, number_one: 1, number_tow: 0},
+        data: {user_id: user_id, article_id: article_id, number_one: 1, number_tow: 0},
         dataType: 'json',
         success: function(data){
-          $('#dat_'+new_id).html(data.html);
+          $('#dat_'+article_id).html(data.html);
         }
       });
     }else{
@@ -79,25 +95,25 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/revoke_status',
         method: 'get',
-        data: {user_id: user_id, new_id: new_id, number: 0},
+        data: {user_id: user_id, article_id: article_id, number: 0},
         dataType: 'json',
         success: function(data){
-          $('#dat_'+new_id).html(data.html);
+          $('#dat_'+article_id).html(data.html);
         }
       });
     }
     
   });
 
-  $('.button_comment').click(function(){
+  $('body').on('click', '.button_comment', function() {
     var comment = $(this).siblings('.content_comment').val();
     var user_id = $(this).siblings('.userid').val();
-    var new_id = $(this).siblings('.newid').val();
-    $(this).siblings('.content_comment').val("")
+    var article_id = $(this).siblings('.articleid').val();
+    $(this).siblings('.content_comment').val('')
     $.ajax({
       url: '/add_new_comment',
       method: 'post',
-      data: {comment: comment, user_id: user_id, new_id: new_id},
+      data: {comment: comment, user_id: user_id, article_id: article_id},
       dataType: 'json',
       success: function(data){
         if(data.html) {
@@ -105,7 +121,8 @@ $(document).on('turbolinks:load', function(){
         }else{
           console.log('undefined');
         }
-        $('#new_'+new_id).append(data.html);
+        $('#new_'+article_id).append(data.html);
+        $('#dat_'+article_id).html(data.view_comment  );
       }
     });
   });
@@ -120,6 +137,7 @@ $(document).on('turbolinks:load', function(){
       alert('should be less than 5MB');
     }
   });
+
   $('.btn-pref .btn').click(function () {
     $('.btn-pref .btn').removeClass('btn-primary').addClass('btn-default');
     $(this).removeClass('btn-default').addClass('btn-primary');   
@@ -140,10 +158,7 @@ $(document).on('turbolinks:load', function(){
     $('#blah').css('display', 'block');
   });
 
-  $('.comment').click(function(){
+  $('body').on('click', '.comment', function() {
     $(this).parents('.abc').siblings('.panel-footer').toggle();
   })
 });
-
-
-

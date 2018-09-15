@@ -12,13 +12,25 @@
 
 ActiveRecord::Schema.define(version: 2018_09_15_133626) do
 
+  create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.string "image"
+    t.integer "status"
+    t.bigint "user_id"
+    t.datetime "public_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id"
-    t.bigint "new_id"
+    t.bigint "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["new_id"], name: "index_comments_on_new_id"
+    t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -32,24 +44,12 @@ ActiveRecord::Schema.define(version: 2018_09_15_133626) do
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "new_id"
+    t.bigint "article_id"
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["new_id"], name: "index_likes_on_new_id"
+    t.index ["article_id"], name: "index_likes_on_article_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
-  end
-
-  create_table "news", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
-    t.string "image"
-    t.integer "status"
-    t.bigint "user_id"
-    t.datetime "public_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_news_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -83,9 +83,9 @@ ActiveRecord::Schema.define(version: 2018_09_15_133626) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "comments", "news", column: "new_id"
+  add_foreign_key "articles", "users"
+  add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
-  add_foreign_key "likes", "news", column: "new_id"
+  add_foreign_key "likes", "articles"
   add_foreign_key "likes", "users"
-  add_foreign_key "news", "users"
 end
