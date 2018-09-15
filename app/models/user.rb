@@ -3,7 +3,9 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable, :confirmable,
     :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
-  has_many :news, dependent: :destroy
+  has_many :news, dependent: :destroy, inverse_of: :user
+  accepts_nested_attributes_for :news
+  
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :follows
