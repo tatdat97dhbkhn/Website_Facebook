@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: %i(index destroy edit update new)
     resources :articles
+    get "/update_status", to: "articles#update_status",
+      as: "update_status"
   end
   root "articles#index"
   post "/add_new_status", to: "articles#create",
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
     as: "lazyload"
   get "/load_more_data", to: "articles#load_more_data",
     as: "load_more_data"
+  get "/search_user", to: "users#search_user",
+    as: "search_user"
   mount ActionCable.server => '/cable'
   resources :users, except: %i(index destroy)
   resources :articles

@@ -8,9 +8,10 @@ class Article < ApplicationRecord
 
   scope :approved_article, ->{where(status: APPROVED)}
   scope :order_id, ->(sort){order id: sort}
-  scope :more_article, ->(article_last){  where(status: APPROVED,
-    id: (1...article_last.to_i))                       }
-
+  scope :order_created, ->(sort){order created_at: sort}
+  scope :more_article, ->(article_last){
+    where(status: APPROVED, id: (1...article_last.to_i))}                       
+  scope :find_news, ->(u_id){where(user_id: u_id, status: Article::APPROVED)}
   ARTICLE_PARAMS = %w(user_id title content image public_time).freeze
   LIMIT_ARTICLES = 2
   APPROVED = 1

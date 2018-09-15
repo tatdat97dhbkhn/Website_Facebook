@@ -122,7 +122,7 @@ $(document).on('turbolinks:load', function(){
           console.log('undefined');
         }
         $('#new_'+article_id).append(data.html);
-        $('#dat_'+article_id).html(data.view_comment  );
+        $('#dat_'+article_id).html(data.view_comment);
       }
     });
   });
@@ -161,4 +161,25 @@ $(document).on('turbolinks:load', function(){
   $('body').on('click', '.comment', function() {
     $(this).parents('.abc').siblings('.panel-footer').toggle();
   })
+
+  $('#search_user').keyup(function(){
+    var content_search = $(this).val();
+    if(content_search.length >= 2){
+      $.ajax({
+        url: '/search_user',
+        method: 'get',
+        data: {name_search: content_search},
+        dataType: 'json',
+        success: function(data){
+          $('#result_search').css('display','block');
+          $('#result_search').html(data.html);
+          $('.padding').hide();
+          console.log(data.html);
+        }
+      });
+    }else{
+      $('.padding').show();
+      $('#result_search').hide();
+    }
+  });
 });

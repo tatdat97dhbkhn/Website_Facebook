@@ -9,7 +9,7 @@
   <ul class="nav hidden-xs" id="lg-menu">
     <li class="active">
       <%= link_to user_path(current_user.id) do %>
-        <i class="glyphicon glyphicon-list-alt"></i> Thông tin cá nhân
+        <i class="glyphicon glyphicon-list-alt"></i> Trang cá nhân
       <% end %>
     </li>
     <li>
@@ -19,9 +19,16 @@
     </li>
     <li>
       <%= link_to edit_user_registration_path do %>
-        <i class="glyphicon glyphicon-refresh"></i> Đổi mật khẩu
+        <i class="glyphicon glyphicon-refresh"></i> Thay đổi thông tin cá nhân
       <% end %>
     </li>
+    <% if current_user.admin == true %>
+      <li>
+        <%= link_to admin_users_path do %>
+          <i class="fa fa-database"></i> Quản lý dữ liệu
+        <% end %>
+      </li>
+    <% end %>
   </ul>
   <ul class="list-unstyled hidden-xs" id="sidebar-footer">
     <li>

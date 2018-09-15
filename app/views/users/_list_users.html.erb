@@ -1,0 +1,54 @@
+<% if @users.count > 0 %>
+  <div class="panel panel-default user_panel">
+    <div class="panel-heading" style="margin-top:50px;">
+      <h3 class="panel-title">User List</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-container">
+        <table class="table-users table" border="0">
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td width="200" align="center">
+                  <%= link_to user_path(user.id) do %>
+                    <% if user.image? %>
+                      <%= image_tag user.image.url, class: "img-responsive" %>
+                    <% else %>
+                      <center>
+                        <%= image_tag "user2.png", class: "img-responsive",
+                          style: "width:100px;height:100px" %>
+                      </center>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td width="200">
+                  <%= link_to user_path(user.id) do %>
+                    <%= user.name %><br>
+                  <% end %>
+                </td>
+                <td>
+                  <i class="fa fa-envelope"></i>
+                  <%= user.email %>
+                </td>
+                <td align="center">
+                    45 Followers
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="panel panel-default user_panel">
+    <div class="panel-heading" style="margin-top:50px;">
+      <h3 class="panel-title">User List</h3>
+    </div>
+    <div class="panel-body">
+      <div class="table-container">
+        <h1>Không tìm thấy kết quả</h1>
+      </div>
+    </div>
+  </div>
+<% end %>

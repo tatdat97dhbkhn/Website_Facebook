@@ -58,5 +58,20 @@ $(document).on('turbolinks:load', function(){
     }else{
       alert("Do not blank Title/Content/ReleaseDate");
     }
-  });  
+  });
+
+  $('.change_status').click(function(){
+    var current_status = $(this).siblings('.current_status').val();
+    var current_article = $(this).siblings('.current_article').val();
+    $.ajax({
+      url: '/admin/update_status',
+      method: 'get',
+      data: {current_status: current_status, current_article: current_article},
+      dataType: 'json',
+      success: function(data){
+        $('#status_'+current_article).html(data.html);
+        console.log(data.html);
+      }
+    });
+  });
 });

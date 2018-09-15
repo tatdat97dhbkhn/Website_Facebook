@@ -1,7 +1,7 @@
 <div class="col-sm-12">
   <h4>Add articles:</h4>
   <div class="panel panel-default">
-    <%= form_for @article, url: admin_articles_path do |f| %>
+    <%= form_for @article do |f| %>
       <div class="panel-body form-horizontal payment-form">
         <%= render "admin/shared/error_messages", object: f.object %>
         <div class="form-group">
@@ -19,6 +19,12 @@
         <div class="form-group">
           <%= f.label :image, class: "col-sm-3 control-label" %>
           <div class="col-sm-9">
+            <div class="img-medium">
+              <% if @article.image? %>
+                <%= image_tag @article.image.url, 
+                  class: "img-responsive img-thumbnail img-circle" %>
+              <% end %>
+            </div>
             <%= f.file_field :image,
               accept: "image/jpeg,image/gif,image/png", class: "form-control" %>
           </div>
@@ -28,10 +34,18 @@
           <div class="col-sm-9">
             <%= f.datetime_local_field :public_time, class: "form-control" %>
             </div>
-        </div>   
+        </div>
+        <!-- <div class="form-group">
+          <%= f.label :status, class: "col-sm-3 control-label" %>
+          <div class="col-sm-9">
+            <% @yrs =[["Approved",Article::APPROVED], ["Not Approved",Article::NOT_APPROVED]] %>
+            <%= f.select(:status,
+            options_for_select(@yrs.collect{ |u| [u[0], u[1]]})) %>
+          </div>
+        </div> -->
         <div class="form-group">
           <div class="col-sm-12 text-right">
-            <%= f.submit :submit, class: "btn btn-primary" %>
+            <%= f.submit "Submit form", class: "btn btn-primary" %>
           </div>
         </div>
       </div>
