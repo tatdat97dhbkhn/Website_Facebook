@@ -1,8 +1,14 @@
-<% notifications.each do |notification| %>
+<% @notifications.each do |notification| %>
   <li>
-    <span>
-      <%= notification.user.name %> - 
-      <%= notification.title %>
-    </span>
+    <%= link_to admin_article_path(notification.id) do %>
+      <% if notification.watched != Article::WATCHED %>
+        <span style="color:blue">
+      <% else %>
+        <span>
+      <% end %>
+        <%= notification.user.name %> -
+        <%= notification.title %> 
+      </span>
+    <% end %>
   </li>
 <% end %>

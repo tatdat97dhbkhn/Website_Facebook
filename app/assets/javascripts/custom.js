@@ -8,24 +8,27 @@ $('[data-toggle=offcanvas]').click(function() {
 });
 
 $(document).on('turbolinks:load', function(){
-  $('.load_article').scroll(function(){
-    if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
-      var last_id = $('.post-id:last').attr('id');
-      $.ajax({
-        url: '/load_more_data',
-        method: 'get',
-        data: {last_id: last_id},
-        dataType: 'json',
-        success: function(data){
-          $('.ajax-load').hide();
-          $('#post-data').append(data.html);
-          console.log(data.html);
-        }
-      });
-    }
-  });
+
+  $('.disabled').unbind('click');
+
+  // $('.load_article').scroll(function(){
+  //   if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
+  //     var last_id = $('.post-id:last').attr('id');
+  //     $.ajax({
+  //       url: '/load_more_data',
+  //       method: 'get',
+  //       data: {last_id: last_id},
+  //       dataType: 'json',
+  //       success: function(data){
+  //         $('.ajax-load').hide();
+  //         $('#post-data').append(data.html);
+  //         console.log(data.html);
+  //       }
+  //     });
+  //   }
+  // });
+
   $('body').on('click', '.like_new', function() {
-    var user_id = $(this).siblings('.user_id').val();
     var article_id = $(this).siblings('.article_id').val();
     var number_one = parseInt($(this).siblings('.number_one').val());
     var number_tow = parseInt($(this).siblings('.number_tow').val());
@@ -39,7 +42,7 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/like_status',
         method: 'get',
-        data: {user_id: user_id, article_id: article_id, number_one: 0, number_tow: 1},
+        data: {article_id: article_id, number_one: 0, number_tow: 1},
         dataType: 'json',
         success: function(data){
           $('#dat_'+article_id).html(data.html);
@@ -55,7 +58,7 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/revoke_status',
         method: 'get',
-        data: {user_id: user_id, article_id: article_id, number: 1},
+        data: {article_id: article_id, number: 1},
         dataType: 'json',
         success: function(data){
           $('#dat_'+article_id).html(data.html);
@@ -65,7 +68,6 @@ $(document).on('turbolinks:load', function(){
   });
 
   $('body').on('click', '.unlike_new', function() {
-    var user_id = $(this).siblings('.user_id').val();
     var article_id = $(this).siblings('.article_id').val();
     var number_tow = parseInt($(this).siblings('.number_tow').val());
     if(number_tow == 0){
@@ -78,7 +80,7 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/like_status',
         method: 'get',
-        data: {user_id: user_id, article_id: article_id, number_one: 1, number_tow: 0},
+        data: {article_id: article_id, number_one: 1, number_tow: 0},
         dataType: 'json',
         success: function(data){
           $('#dat_'+article_id).html(data.html);
@@ -94,25 +96,23 @@ $(document).on('turbolinks:load', function(){
       $.ajax({
         url: '/revoke_status',
         method: 'get',
-        data: {user_id: user_id, article_id: article_id, number: 0},
+        data: {article_id: article_id, number: 0},
         dataType: 'json',
         success: function(data){
           $('#dat_'+article_id).html(data.html);
         }
       });
     }
-    
   });
 
   $('body').on('click', '.button_comment', function() {
     var comment = $(this).siblings('.content_comment').val();
-    var user_id = $(this).siblings('.userid').val();
     var article_id = $(this).siblings('.articleid').val();
     $(this).siblings('.content_comment').val('')
     $.ajax({
       url: '/add_new_comment',
       method: 'post',
-      data: {comment: comment, user_id: user_id, article_id: article_id},
+      data: {comment: comment, article_id: article_id},
       dataType: 'json',
       success: function(data){
         $('#new_'+article_id).append(data.html);
@@ -190,5 +190,43 @@ $(document).on('turbolinks:load', function(){
         $('#update_follow').html(data.follower);
       }
     });
+  });
+
+  $('.show_notification').click(function(){
+    var counted = parseInt($('#user_countd_id').val());
+    
+    if(counted>0){
+      $.ajax({
+        url: '/user_update_showed',
+        method: 'get',
+        data: {counted: counted},
+        dataType: 'json',
+        success: function(data){
+         $('#count_noti').remove();
+        }
+      });
+    }
+  });
+
+  $('.up_user_watch').click(function(){
+    var ar_id = $(this).siblings('.ar_id').val();
+    $.ajax({
+      url: '/user_update_watched',
+      method: 'get',
+      data: {ar_id: ar_id},
+      dataType: 'json',
+      success: function(data){
+        $('#closemodal_'+ar_id).remove();
+      }
+    });
+  });
+});
+
+$(document).on('turbolinks:load', function () {
+  $('.load_article').scroll(function(){
+    var more_posts_url = $('.pagination .next_page a').attr('href');
+    if (more_posts_url && $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+      $.getScript(more_posts_url);
+    }
   });
 });

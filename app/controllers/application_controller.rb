@@ -1,11 +1,19 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  # before_action :find_notification
-  
-  # def find_notification
-  #   @notifications = Article.where.not(status: 1.to_i)
-  # end
+  before_action :new_article
+  before_action :all_feedbacks
+
+  def all_feedbacks
+    if current_user && current_user.admin != true
+      @list_feedback = Article.find_news_feed(current_user.id).order_created(:desc)
+      @count_feedback = Article.count_user_noti(current_user.id)
+    end
+  end
+
+  def new_article
+    @article = Article.new
+  end
 
   protected
   def configure_permitted_parameters

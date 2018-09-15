@@ -42,8 +42,8 @@
               <br>
               <div>
                 <span>
-                  <%= f.article.likes.where(status: 1).count %> Likes, 
-                  <%= f.article.likes.where(status: 0).count %> Unlikes, 
+                  <%= f.article.likes.list_likes.count %> Likes, 
+                  <%= f.article.likes.list_unlike.count %> Unlikes, 
                   <%= f.article.comments.count %> comment
                 </span>
               </div>

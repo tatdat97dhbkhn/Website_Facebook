@@ -20,16 +20,17 @@ $(document).on('turbolinks:load', function(){
 function calc_total(){
   var sum = 0;
   $('.input-amount').each(function(){
-      sum += parseFloat($(this).text());
+    sum += parseFloat($(this).text());
   });
-  $(".preview-total").text(sum);    
+  $('.preview-total').text(sum);    
 }
+
 $(document).on('click', '.input-remove-row', function(){ 
   var tr = $(this).closest('tr');
   tr.fadeOut(200, function(){
     tr.remove();
      calc_total()
-});
+  });
 });
 
 $(document).on('turbolinks:load', function(){
@@ -39,28 +40,28 @@ $(document).on('turbolinks:load', function(){
     var content = $('.payment-form textarea[name="content"]').val();
     var date = $('.payment-form input[name="date"]').val();
     var image = $('.payment-form input[name="image"]').val();
-    if(title != "" && content != "" && date != ""){
-      form_data["title"] = title;
-      form_data["content"] = content;
-      form_data["image"] = image;
-      form_data["date"] = date;
-      form_data["remove-row"] = '<span class="glyphicon glyphicon-remove"></span>';
+    if(title != '' && content != '' && date != ''){
+      form_data['title'] = title;
+      form_data['content'] = content;
+      form_data['image'] = image;
+      form_data['date'] = date;
+      form_data['remove-row'] = '<span class="glyphicon glyphicon-remove"></span>';
       var row = $('<tr></tr>');
       $.each(form_data, function( type, value ) {
           $('<td class="input-'+type+'"></td>').html(value).appendTo(row);
       });
       $('.preview-table > tbody:last').append(row); 
       calc_total();
-      $('.payment-form textarea[name="title"]').val("");
-      $('.payment-form textarea[name="content"]').val("");
-      $('.payment-form input[name="date"]').val("");
-      $('.payment-form input[name="image"]').val("");
+      $('.payment-form textarea[name="title"]').val('');
+      $('.payment-form textarea[name="content"]').val('');
+      $('.payment-form input[name="date"]').val('');
+      $('.payment-form input[name="image"]').val('');
     }else{
-      alert("Do not blank Title/Content/ReleaseDate");
+      alert('Do not blank Title/Content/ReleaseDate');
     }
   });
 
-  $('.change_status').click(function(){
+  $('body').on('click', '.change_status', function() {
     var current_status = $(this).siblings('.current_status').val();
     var current_article = $(this).siblings('.current_article').val();
     $.ajax({
@@ -73,5 +74,20 @@ $(document).on('turbolinks:load', function(){
         console.log(data.html);
       }
     });
+  });
+
+  $('#show_notificaton_admin').click(function(){
+    var counted = parseInt($('#countd_id').val());
+    if(counted>0){
+      $.ajax({
+        url: '/admin/update_showed',
+        method: 'get',
+        data: {counted: counted},
+        dataType: 'json',
+        success: function(data){
+         $('#notification-counter').remove();
+        }
+      });
+    }
   });
 });
