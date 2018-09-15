@@ -4,6 +4,8 @@ class ArticlesController < ApplicationController
   def index
     @articles = Article.approved_article.order_id(:desc)
                        .limit(Article::LIMIT_ARTICLES)
+    @count_article = Article.find_news(current_user.id).count
+    @count_follower = Follow.list_followers(current_user.id).count
   end
 
   def new
@@ -25,7 +27,7 @@ class ArticlesController < ApplicationController
       redirect_to admin_articles_path
     else
       flash[:danger] = "Fail create..."
-      render :new
+      redirect_back fallback_location: root_path
     end
   end
 

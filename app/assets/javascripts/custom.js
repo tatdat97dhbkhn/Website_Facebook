@@ -42,7 +42,6 @@ $(document).on('turbolinks:load', function(){
         data: {user_id: user_id, article_id: article_id, number_one: 0, number_tow: 1},
         dataType: 'json',
         success: function(data){
-          console.log(data.html);
           $('#dat_'+article_id).html(data.html);
         }
       });
@@ -116,11 +115,6 @@ $(document).on('turbolinks:load', function(){
       data: {comment: comment, user_id: user_id, article_id: article_id},
       dataType: 'json',
       success: function(data){
-        if(data.html) {
-          console.log(data.html);
-        }else{
-          console.log('undefined');
-        }
         $('#new_'+article_id).append(data.html);
         $('#dat_'+article_id).html(data.view_comment);
       }
@@ -174,12 +168,27 @@ $(document).on('turbolinks:load', function(){
           $('#result_search').css('display','block');
           $('#result_search').html(data.html);
           $('.padding').hide();
-          console.log(data.html);
         }
       });
     }else{
       $('.padding').show();
       $('#result_search').hide();
     }
+  });
+
+  // follow
+  $('#follow').click(function(){
+    var currentuser_id = $(this).siblings('.currentuser_id').val();
+    var followingid = $(this).siblings('.followingid').val();
+    $.ajax({
+      url: '/track_follow',
+      method: 'get',
+      data: {currentuser_id: currentuser_id, followingid: followingid},
+      dataType: 'json',
+      success: function(data){
+        $('#follow').html(data.html);
+        $('#update_follow').html(data.follower);
+      }
+    });
   });
 });

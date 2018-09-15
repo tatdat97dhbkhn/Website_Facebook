@@ -16,7 +16,7 @@
       <%= link_to user_path(current_user.id) do %>
         <p class="lead"><%= current_user.name %></p>
       <% end %>
-      <p>45 Followers, 13 Posts</p>
+      <p><%= @count_follower %> Followers, <%= @count_article %> Posts</p>
     </div>
   </div>
   <div class="well"> 

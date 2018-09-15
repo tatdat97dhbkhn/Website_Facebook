@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4>Following</h4>
+      </div>
+      <div class="gaadiex-list">
+        <% @list_followings.each do |list_following| %>
+          <div class="gaadiex-list-item border-b-1">
+            <% if list_following.following.image? %>
+              <%= image_tag list_following.following.image.url,
+                class: "gaadiex-list-item-img" %>
+            <% else %>
+              <%= image_tag "user2.png",
+                class: "gaadiex-list-item-img" %>
+            <% end %>
+            <div class="gaadiex-list-item-text">
+              <h3>
+                <%= link_to user_path(list_following.following.id) do %>
+                  <%= list_following.following.name %>
+                <% end %>
+              </h3>
+              <h4><%= list_following.following.email %></h4>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4>Followers</h4>
+      </div>
+      <div class="gaadiex-list" id="update_follow">
+        <% @list_followers.each do |list_follower| %>
+          <div class="gaadiex-list-item border-b-1">
+            <% if list_follower.follower.image? %>
+              <%= image_tag list_follower.follower.image.url,
+                class: "gaadiex-list-item-img" %>
+            <% else %>
+              <%= image_tag "user2.png",
+                class: "gaadiex-list-item-img" %>
+            <% end %>
+            <div class="gaadiex-list-item-text">
+              <h3>
+                <%= link_to user_path(list_follower.follower.id) do %>
+                  <%= list_follower.follower.name %>
+                <% end %>  
+              </h3>
+              <h4><%= list_follower.follower.email %></h4>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

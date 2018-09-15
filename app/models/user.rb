@@ -4,7 +4,6 @@ class User < ApplicationRecord
     :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
   has_many :articles, dependent: :destroy, inverse_of: :user
-  
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :follows
@@ -19,10 +18,9 @@ class User < ApplicationRecord
   USER_UPDATE_PARAMS = %w(password current_password).freeze
 
   
- scope :find_user, -> (name){ where("name LIKE ?", "%#{name}%")}
+  scope :find_user, -> (name){ where("name LIKE ?", "%#{name}%")}
 
   mount_uploader :image, PictureUploader
-
   validates :name, presence: true,
     length: {maximum: Settings.user.length.max_name}
   validate  :image_size
