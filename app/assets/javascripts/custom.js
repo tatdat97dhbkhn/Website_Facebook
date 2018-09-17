@@ -22,4 +22,19 @@ $(document).on('turbolinks:load', function(){
     $('.btn-pref .btn').removeClass('btn-primary').addClass('btn-default');
     $(this).removeClass('btn-default').addClass('btn-primary');   
   });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#blah').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imgInp").change(function(){
+      readURL(this);
+      $("#blah").css("display", "block");
+  });
 });
