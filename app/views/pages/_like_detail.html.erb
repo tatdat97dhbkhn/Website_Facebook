@@ -1,0 +1,5 @@
+<span>
+  <%= @new.likes.where(status: 1).count %> Likes, 
+  <%= @new.likes.where(status: 0).count %> Unlikes, 
+  <%= @new.comments.count %> comment
+</span>
