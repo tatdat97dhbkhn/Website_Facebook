@@ -8,9 +8,9 @@
   </ul>
   <ul class="nav hidden-xs" id="lg-menu">
     <li class="active">
-      <a href="#featured">
+      <%= link_to user_path(current_user.id) do %>
         <i class="glyphicon glyphicon-list-alt"></i> Thông tin cá nhân
-      </a>
+      <% end %>
     </li>
     <li>
       <a href="#stories">
@@ -18,9 +18,9 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <%= link_to edit_user_registration_path do %>
         <i class="glyphicon glyphicon-refresh"></i> Đổi mật khẩu
-      </a>
+      <% end %>
     </li>
   </ul>
   <ul class="list-unstyled hidden-xs" id="sidebar-footer">

@@ -1,14 +1,22 @@
 <div class="col-sm-4">
   <div class="panel panel-default">
     <div class="panel-thumbnail">
-      <%= image_tag "imgtest.jpg", class: "img-responsive" %>
+      <%= link_to user_path(current_user.id) do %>
+        <% if current_user.image? %>
+          <%= image_tag current_user.image.url, class: "img-responsive" %>
+        <% else %>
+          <center>
+            <%= image_tag "user2.png", class: "img-responsive",
+              style: "width:100px;height:100px" %>
+          </center>
+        <% end %>
+      <% end %>
     </div>
     <div class="panel-body">
-      <p class="lead">Urbanization</p>
+      <%= link_to user_path(current_user.id) do %>
+        <p class="lead"><%= current_user.name %></p>
+      <% end %>
       <p>45 Followers, 13 Posts</p>
-      <p>
-        <%= image_tag "default_image", style: "width: 28px;height: 28px" %>
-      </p>
     </div>
   </div>
   <div class="well"> 

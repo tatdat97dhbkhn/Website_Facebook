@@ -279,3 +279,55 @@ small.text-muted {
     padding-left:3px;
   }
 }
+
+/*/*/
+.panel-heading {
+  padding: 5px 15px;
+}
+
+.panel-footer {
+padding: 1px 15px;
+color: #A0A0A0;
+}
+
+.profile-img {
+width: 96px;
+height: 96px;
+margin: 0 auto 10px;
+display: block;
+-moz-border-radius: 50%;
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
+/* */
+.fb-profile img.fb-image-lg{
+  z-index: 0;
+  width: 100%;  
+  margin-bottom: 10px;
+}
+
+.fb-image-profile
+{
+  margin: -90px 10px 0px 50px;
+  z-index: 9;
+  width: 20%; 
+  float: left;
+  position: relative;
+}
+
+@media (max-width:768px)
+{
+    
+  .fb-profile-text>h1{
+    font-weight: 700;
+    font-size:16px;
+  }
+
+  .fb-image-profile
+  {
+    margin: -45px 10px 0px 25px;
+    z-index: 9;
+    width: 20%; 
+  }
+}
