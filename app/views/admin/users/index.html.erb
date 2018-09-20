@@ -1,0 +1,46 @@
+<main id="page-content-wrapper" role="main">
+    <h2>User Management</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Image</th>
+          <th>Admin?</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td>
+              <% if user.image? %>
+                <%= image_tag user.image.url,
+                  class: "img-responsive img-thumbnail img-circle",
+                  style: "width:100px;height:100px" %>
+              <% end %>
+            </td>
+            <td>
+              <% if user.admin %>
+                Admin
+              <% else %>
+                Not Admin
+              <% end %>
+            </td>
+            <td>
+              <% if current_user.id != user.id %>
+                <%= link_to admin_user_path(id: user.id),
+                  method: :delete, data: {confirm: "Sure"} do  %>
+                  <i class="glyphicon glyphicon-trash"></i>
+                <% end %>
+              <% else %>
+                You
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</main>

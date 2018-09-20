@@ -1,0 +1,55 @@
+<main id="page-content-wrapper" role="main">
+  <h2>News Management</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Content</th>
+        <th>Accept The Post</th>
+        <th>Release Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @news.each do |n| %>
+        <tr>
+          <td><%= n.user.name %></td>
+          <td><%= n.title %></td>
+          <td>
+            <% if n.image? %>
+              <%= image_tag n.image.url,
+                class: "img-responsive img-thumbnail img-circle",
+                style: "width:100px;height:100px" %>
+            <% end %>
+          </td>
+          <td><%= n.content %></td>
+          <td>
+            <% if n.status == 0 %>
+              Not approved yet
+            <% else %>  
+              Approved
+            <% end %>
+          </td>
+          <td>
+            <%= n.public_time %>
+          </td>
+          <td>
+            <%= link_to "#" do %>
+            <i class="glyphicon glyphicon-edit"></i> Change
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "#",
+              method: :delete, data: {confirm: "Sure"} do  %>
+              <i class="glyphicon glyphicon-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @news, theme: "twitter-bootstrap-3" %>  
+</main>

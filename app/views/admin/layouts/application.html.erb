@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebsiteFacebook</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'admin/application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="flash" style="text-align: center">
+        <% flash.each do |message_type, message| %>
+          <div class="alert alert-<%= message_type %>">
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+      <%= render "admin/layouts/header" %>
+      <div id="wrapper">
+        <%= render "admin/layouts/sidebar" %>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
