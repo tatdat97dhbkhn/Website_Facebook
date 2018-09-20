@@ -24,6 +24,17 @@
           </form>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-globe"></i> 
+                <%= render "admin/layouts/counter", counter: @notifications.count %>
+                Notification
+              </a>
+              <ul class="dropdown-menu dropdown-block" role="menu" id="notificationList">
+                <%= render "admin/layouts/notification", 
+                  notifications: @notifications %>
+              </ul>
+            </li>
+            <li class="dropdown">
               <a id="user-profile" href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <% if current_user.image? %>
                   <%= image_tag current_user.image.url,

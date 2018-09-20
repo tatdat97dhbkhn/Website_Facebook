@@ -49,6 +49,6 @@ class User < ApplicationRecord
   private
   def image_size
     return unless image.size > Settings.image.capacity.megabytes
-    errors.add :picture, "should be less than 5MB"
+    errors.add :image, "should be less than 5MB"
   end
 end
