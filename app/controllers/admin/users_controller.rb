@@ -1,8 +1,8 @@
-class  Admin::UsersController < Admin::BaseController
+class Admin::UsersController < Admin::BaseController
   def index
-    @users = User.all  
+    @users = User.all
   end
-  
+
   def destroy
     @user = User.find_by id: params[:id]
     if @user.delete

@@ -1,9 +1,9 @@
 class Admin::BaseController < ApplicationController
   layout "admin/layouts/application"
-  # before_action :find_notification
 
-  # def find_notification
-  #   @notifications = New.where.not(status: 1.to_i)
-  #   # byebug
-  # end
+  before_action :exam_user
+
+  def exam_user
+    redirect_to root_path if current_user.admin != true
+  end
 end

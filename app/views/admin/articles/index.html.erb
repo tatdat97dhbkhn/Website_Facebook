@@ -1,5 +1,5 @@
 <main id="page-content-wrapper" role="main">
-  <h2>News Management</h2>
+  <h2>Articles Management</h2>
   <table class="table">
     <thead>
       <tr>
@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @news.each do |n| %>
+      <% @articles.each do |n| %>
         <tr>
           <td><%= n.user.name %></td>
           <td><%= n.title %></td>
@@ -27,11 +27,7 @@
           </td>
           <td><%= n.content %></td>
           <td>
-            <% if n.status == 0 %>
-              Not approved yet
-            <% else %>  
-              Approved
-            <% end %>
+            <%= Article::STATUSES[n.status] %>
           </td>
           <td>
             <%= n.public_time %>
@@ -42,7 +38,7 @@
             <% end %>
           </td>
           <td>
-            <%= link_to "#",
+            <%= link_to admin_article_path(n.id) ,
               method: :delete, data: {confirm: "Sure"} do  %>
               <i class="glyphicon glyphicon-trash"></i>
             <% end %>
@@ -51,5 +47,5 @@
       <% end %>
     </tbody>
   </table>
-  <%= paginate @news, theme: "twitter-bootstrap-3" %>  
+  <%= paginate @articles, theme: "twitter-bootstrap-3" %>  
 </main>
