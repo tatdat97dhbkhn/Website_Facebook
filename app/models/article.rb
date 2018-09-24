@@ -1,7 +1,4 @@
 class Article < ApplicationRecord
-  # after_create_commit {
-  #   NotificationBroadcastJob.perform_later(Article.count, self)}
-
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   belongs_to :user
