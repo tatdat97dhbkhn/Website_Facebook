@@ -23,7 +23,10 @@ Rails.application.routes.draw do
     as: "load_more_data"
   get "/search_user", to: "users#search_user",
     as: "search_user"
+  get "/track_follow", to: "follows#track_follow",
+    as: "track_follow"
   mount ActionCable.server => '/cable'
   resources :users, except: %i(index destroy)
   resources :articles
+  resources :follows
 end

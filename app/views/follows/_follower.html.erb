@@ -1,0 +1,19 @@
+<% @list_followers.each do |list_follower| %>
+<div class="gaadiex-list-item border-b-1">
+  <% if list_follower.follower.image? %>
+    <%= image_tag list_follower.follower.image.url,
+      class: "gaadiex-list-item-img" %>
+  <% else %>
+    <%= image_tag "user2.png",
+      class: "gaadiex-list-item-img" %>
+  <% end %>
+  <div class="gaadiex-list-item-text">
+    <h3>
+      <%= link_to user_path(list_follower.follower.id) do %>
+        <%= list_follower.follower.name %>
+      <% end %>  
+    </h3>
+    <h4><%= list_follower.follower.email %></h4>
+  </div>
+</div>
+<% end %>
