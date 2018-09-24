@@ -1,0 +1,76 @@
+<div class="fb-profile">
+  <%=  image_tag "img_bia.jpeg", class: "fb-image-lg" %>
+  <% if @user.image? %>
+    <%= image_tag @user.image.url, class: "fb-image-profile thumbnail" %>
+  <% else %>
+      <%= image_tag "user2.png", class: "fb-image-profile thumbnail",
+        style: "width:100px;height:100px;float:left" %>
+  <% end %>
+  <div class="fb-profile-text">
+    <h1><%= @user.name %></h1>
+  </div>
+</div>
+<div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+  <div class="btn-group" role="group">
+    <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab">
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      <div class="hidden-xs">Timeline</div>
+    </button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab">
+      <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+      <div class="hidden-xs">Favorites</div>
+    </button>
+  </div>
+  <div class="btn-group" role="group">
+    <% if @user.id == current_user.id %>
+      <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <div class="hidden-xs">Following</div>
+      </button>
+    <% else %>
+      <button type="button" id="follow" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus"></span>
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <div class="hidden-xs">Follow</div>
+      </button>
+    <% end %>
+  </div>
+</div>
+<div class="well">
+  <div class="tab-content">
+    <div class="tab-pane fade in active" id="tab1">
+      <%= render "articles/loadmore_detail" %>
+    </div>
+    <div class="tab-pane fade in" id="tab2">
+      <div class="container mt-5 mb-5">
+        <div class="row">
+          <div class="col-md-9 offset-md-3">
+            <ul class="timeline">
+              <% @favorites.each do |favorite| %>
+                <li>
+                  <a target="_blank" href="#" style="color:steelblue;">
+                    <%= favorite.article.title %>
+                  </a>
+                  <b class="float-right">
+                    <%= favorite.created_at %>
+                  </b>
+                  <p>
+                    <%= link_to "#",
+                      data: {toggle: "modal", target: "#myModal_#{favorite.article.id}"} do %>
+                      <%= favorite.article.content %>
+                    <% end %>
+                  </p>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade in" id="tab3">
+      <h3>This is tab 3</h3>
+    </div>
+  </div>
+</div> 

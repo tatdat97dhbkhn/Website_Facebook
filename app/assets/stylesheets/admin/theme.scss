@@ -166,3 +166,12 @@ margin-top: 20px;
   background: #245682 !important;
   color: #fff !important;
 }
+
+.change_status {
+  cursor: pointer;
+  color:blueviolet;
+}
+
+.change_status:hover{
+  background-color: chartreuse;
+}

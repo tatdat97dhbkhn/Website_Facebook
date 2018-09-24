@@ -1,10 +1,14 @@
 class ArticlesController < ApplicationController
+  before_action :find_article, only: %i(edit update destroy)
+
   def index
     @articles = Article.approved_article.order_id(:desc)
                        .limit(Article::LIMIT_ARTICLES)
   end
 
-  def new; end
+  def new
+    @article = Article.new
+  end
 
   def load_more_data
     @article_last = params[:last_id].to_i
@@ -13,21 +17,39 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(user_id: params[:user_id], title: params[:title],
-      content: params[:content], image: params[:image].to_s, status: 0)
+    @article = Article.create(user_id: current_user.id,
+      status: Article::APPROVED)
+    @article.update_attributes(article_params)
     if @article.save
       flash[:success] = "Successfully created..."
-      redirect_to request.referer
+      redirect_to admin_articles_path
     else
       flash[:danger] = "Fail create..."
-      redirect_to request.referer
+      render :new
     end
   end
 
   def show; end
 
+  def edit; end
+
+  def update
+    if @article.update_attributes article_params
+      flash[:success] = "Update successfull!"
+    else
+      flash[:danger] = "Fail"
+    end
+    redirect_back fallback_location: root_path
+  end
+
   private
-  def articles_params
-    params.require(:article).permit Article::ARTICLES_PARAMS
+  def article_params
+    params.require(:article).permit(:image, :title, :content, :public_time)
+  end
+
+  def find_article
+    @article = Article.find_by id: params[:id]
+    return if @article
+    redirect_to root_path
   end
 end

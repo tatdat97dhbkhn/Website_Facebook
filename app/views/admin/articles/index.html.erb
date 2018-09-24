@@ -27,14 +27,19 @@
           </td>
           <td><%= n.content %></td>
           <td>
-            <%= Article::STATUSES[n.status] %>
+            <%= hidden_field_tag :current_status, n.status, class: "current_status" %>
+            <%= hidden_field_tag :current_article, n.id, class: "current_article" %>
+            <span class="change_status">
+              <i class="fa fa-key"></i> 
+              <i id="status_<%= n.id %>"><%= Article::STATUSES[n.status] %></i>
+            </span>
           </td>
           <td>
             <%= n.public_time %>
           </td>
           <td>
-            <%= link_to "#" do %>
-            <i class="glyphicon glyphicon-edit"></i> Change
+            <%= link_to edit_admin_article_path(n.id) do %>
+            <i class="glyphicon glyphicon-edit"></i>
             <% end %>
           </td>
           <td>

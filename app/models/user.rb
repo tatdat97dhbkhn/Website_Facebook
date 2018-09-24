@@ -18,6 +18,9 @@ class User < ApplicationRecord
   USER_CREATE_PARAMS = %w(name email password image).freeze
   USER_UPDATE_PARAMS = %w(password current_password).freeze
 
+  
+ scope :find_user, -> (name){ where("name LIKE ?", "%#{name}%")}
+
   mount_uploader :image, PictureUploader
 
   validates :name, presence: true,

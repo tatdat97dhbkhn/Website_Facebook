@@ -1,6 +1,7 @@
 user:
   length:
     max_name: 200
+    min_name: 6
 image:
   size: 400
   capacity: 5

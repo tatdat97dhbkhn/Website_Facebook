@@ -1,25 +1,12 @@
 class Admin::ArticlesController < Admin::BaseController
   before_action :find_article, only: %i(edit update destroy)
 
-  def index
-    @articles = Article.all.page(params[:page]).per_page 10
-  end
-
   def new
     @article = Article.new
   end
 
-  def create
-    @article = Article.create(user_id: current_user.id,
-      status: Article::APPROVED)
-    @article.update_attributes(article_params)
-    if @article.save
-      flash[:success] = "Successfully created..."
-      redirect_to admin_articles_path
-    else
-      flash[:danger] = "Fail create..."
-      render :new
-    end
+  def index
+    @articles = Article.all.page(params[:page]).per_page 8
   end
 
   def destroy
@@ -30,11 +17,13 @@ class Admin::ArticlesController < Admin::BaseController
 
   def show; end
 
-  private
-  def article_params
-    params.require(:article).permit(:image, :title, :content, :public_time)
+  def update_status
+    @status = params[:current_status].to_i
+    @article = Article.find_by id: params[:current_article].to_i
+    @article.update_attributes status: (Article::APPROVED - @status)
   end
 
+  private
   def find_article
     @article = Article.find_by id: params[:id]
     return if @article
