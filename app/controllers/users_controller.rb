@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @articles = Article.find_news(params[:id]).order_created(:desc)
+    @articles = Article.find_news(params[:id]).sort_time(:desc)
     @favorites = Like.find_likes(params[:id])
                      .order(created_at: :desc)
     @user = User.find_by id: params[:id]

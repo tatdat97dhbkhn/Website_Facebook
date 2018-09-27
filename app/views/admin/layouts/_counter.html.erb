@@ -1,1 +1,7 @@
-<span id="notification-counter" style="color:red"><%= counter %> </span>
+<span id="notification-counter" style="color:red">
+  <% if @counted.count > 0 %>
+    <%= @counted.count %> 
+    <%= hidden_field_tag :counted, @counted.count, id: "countd_id" %>
+  <% end %>
+</span>
+

@@ -1,0 +1,7 @@
+$('#post-data').append('<%= j render @articles %>');
+<% if @articles.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate @posts %>');
+<% else %>
+  $('.load_article').off('scroll');
+  $('.pagination').remove();
+<% end %>

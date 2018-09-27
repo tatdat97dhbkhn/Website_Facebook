@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     resources :articles
     get "/update_status", to: "articles#update_status",
       as: "update_status"
+    get "/accept_article/:id", to: "articles#accept_article",
+      as: "accept_article"
+    get "/update_showed", to: "articles#update_showed",
+      as: "update_showed"
   end
   root "articles#index"
   post "/add_new_status", to: "articles#create",
@@ -25,6 +29,12 @@ Rails.application.routes.draw do
     as: "search_user"
   get "/track_follow", to: "follows#track_follow",
     as: "track_follow"
+  get "/user_update_showed", to: "articles#user_update_showed",
+    as: "user_update_showed"
+  get "/user_update_watched", to: "articles#user_update_watched",
+    as: "user_update_watched"
+  get "/list_article_care", to: "pages#list_article_care",
+    as: "list_article_care"
   mount ActionCable.server => '/cable'
   resources :users, except: %i(index destroy)
   resources :articles

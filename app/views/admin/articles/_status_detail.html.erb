@@ -1,3 +1,6 @@
-<i id="status_<%= @article.id %>">
-  <%= Article::STATUSES[@article.status] %>
-</i>
+<%= hidden_field_tag :current_status, @article.status, class: "current_status" %>
+<%= hidden_field_tag :current_article, @article.id, class: "current_article" %>
+<span class="change_status">
+  <i class="fa fa-key"></i> 
+  <i><%= Article::STATUSES[@article.status] %></i>
+</span>

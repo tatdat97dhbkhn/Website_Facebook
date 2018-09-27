@@ -1,0 +1,6 @@
+<% @list_user_care.each do |user| %>
+  <% @articles = user.articles.order_public_time(Time.zone.now).approved_article %>
+  <%= render @articles do |article| %>
+    <%= render "articles/article" %>
+  <% end %>
+<% end %>

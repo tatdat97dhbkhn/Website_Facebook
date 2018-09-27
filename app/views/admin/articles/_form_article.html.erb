@@ -33,16 +33,8 @@
           <%= f.label :public_time, class: "col-sm-3 control-label" %>
           <div class="col-sm-9">
             <%= f.datetime_local_field :public_time, class: "form-control" %>
-            </div>
-        </div>
-        <!-- <div class="form-group">
-          <%= f.label :status, class: "col-sm-3 control-label" %>
-          <div class="col-sm-9">
-            <% @yrs =[["Approved",Article::APPROVED], ["Not Approved",Article::NOT_APPROVED]] %>
-            <%= f.select(:status,
-            options_for_select(@yrs.collect{ |u| [u[0], u[1]]})) %>
           </div>
-        </div> -->
+        </div>
         <div class="form-group">
           <div class="col-sm-12 text-right">
             <%= f.submit "Submit form", class: "btn btn-primary" %>

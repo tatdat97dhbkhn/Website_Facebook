@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="thumbnail">
+      <% if @article.image? %>
+        <%= image_tag @article.image.url %>
+      <% end %>
+      <div class="caption">
+        <h4 class="pull-right"><%= @article.user.name %></h4>
+        <h4><a href="#">Title: <%= @article.title %></a></h4>
+        <p>Content: <%= @article.content %></p>
+        <p>Date post: <%= @article.public_time %></p>
+      </div>
+      <div class="ratings">
+        <p>
+          <% if @article.status != Article::APPROVED %>
+            <%= link_to  admin_accept_article_path(@article.id) do %>
+            <i class="fa fa-key"></i> 
+            <i>Accept article</i>
+            <% end %>
+          <% end %>            
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

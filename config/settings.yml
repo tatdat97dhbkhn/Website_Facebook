@@ -5,3 +5,6 @@ user:
 image:
   size: 400
   capacity: 5
+zero: 0
+one: 1
+eight: 8

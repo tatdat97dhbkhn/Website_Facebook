@@ -26,12 +26,12 @@
             <% end %>
           </td>
           <td><%= n.content %></td>
-          <td>
+          <td id="status_<%= n.id %>">
             <%= hidden_field_tag :current_status, n.status, class: "current_status" %>
             <%= hidden_field_tag :current_article, n.id, class: "current_article" %>
             <span class="change_status">
               <i class="fa fa-key"></i> 
-              <i id="status_<%= n.id %>"><%= Article::STATUSES[n.status] %></i>
+              <i><%= Article::STATUSES[n.status] %></i>
             </span>
           </td>
           <td>

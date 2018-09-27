@@ -23,10 +23,10 @@
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+            <li class="dropdown" id="show_notificaton_admin">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-globe"></i> 
-                <%= render "admin/layouts/counter", counter: 1 %>
+                <%= render "admin/layouts/counter", counter: @count %>
                 Notification
               </a>
               <ul class="dropdown-menu dropdown-block" role="menu" id="notificationList">

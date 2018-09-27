@@ -3,6 +3,9 @@ class Admin::UsersController < Admin::BaseController
     @users = User.all
   end
 
+  def show
+  end
+
   def destroy
     @user = User.find_by id: params[:id]
     if @user.delete

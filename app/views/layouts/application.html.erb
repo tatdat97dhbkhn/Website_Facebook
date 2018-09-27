@@ -46,19 +46,25 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   Update Status
               </div>
-              <%= form_tag add_new_status_path, method: :post,
-                class: "form center-block" do %>
-                <%= hidden_field_tag :user_id, current_user.id %>
+              <%= form_for @article, class: "form center-block" do |f| %>
                 <div class="modal-body">
+                  <% if flash[:danger].present? %>
+                    <div class="form-group" style="color:red; margin-left: 20px;">
+                      Do not blank title/content/public_date
+                    </div>
+                  <% end %>
                   <div class="form-group">
-                    <%= text_field_tag :title, params[:title],
+                    <%= f.text_field :title,
                       class: "form-control input-lg",
                       autofocus: "", placeholder: "Title" %>
                   </div>
                   <div class="form-group">
-                    <%= text_area_tag :content, params[:content],
+                    <%= f.text_area :content,
                       class: "form-control input-lg", rows: 10,
                       autofocus: "", placeholder: "What do you want to share?" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.datetime_local_field :public_time, class: "form-control input-lg" %>
                   </div>
                   <div class="form-group">
                     <img id="blah" src="#" style="display:none" class="form-control" />
@@ -66,7 +72,6 @@
                 </div>
                 <div class="modal-footer">
                   <div>
-                    <%= submit_tag "Post", class: "btn btn-primary btn-sm" %>
                     <ul class="pull-left list-inline">
                       <li>
                         <a href="">
@@ -75,13 +80,11 @@
                       </li>
                       <li></li>
                       <li>                         
-                        <form id="form1" runat="server">
-                          <label id="#bb">
-                            <i class="fa fa-image"></i>
-                            <%= file_field_tag :image, id: "imgInp",
-                              accept: 'image/jpeg,image/gif,image/png' %>
-                          </label>
-                        </form>
+                        <label id="#bb">
+                          <i class="fa fa-image"></i>
+                          <%= f.file_field :image, id: "imgInp",
+                            accept: 'image/jpeg,image/gif,image/png' %>
+                        </label>
                       </li>
                       <li>
                         <span id="upload_image">
@@ -89,12 +92,14 @@
                         </span>
                       </li>
                     </ul>
+                    <%= f.submit "Post", class: "btn btn-primary btn-sm" %>
                   </div>	
                 </div>
               <% end %>
             </div>
           </div>
         </div>
+        <%= render "articles/modal" %>
       <% else %>
         <%= yield %>
         <p class="notice"><%= notice %></p>
@@ -102,26 +107,11 @@
       <% end %>
     </div>
   </body>
-
-<script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '{your-app-id}',
-        cookie     : true,
-        xfbml      : true,
-        version    : '{api-version}'
+  <% if flash[:danger].present?  %>
+    <script>
+      $(document).on('turbolinks:load', function(){
+        $("#postModal").modal();
       });
-        
-      FB.AppEvents.logPageView();   
-        
-    };
-  
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-  </script>
+    </script>
+<% end %>
 </html>

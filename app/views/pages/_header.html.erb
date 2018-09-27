@@ -26,17 +26,44 @@
           <i class="glyphicon glyphicon-plus"></i> Post
         </a>
       </li>
-      <li>
+      <li class="show_notification">
         <a href="#" data-toggle="dropdown">
           <i class="glyphicon glyphicon-globe"></i> 
-          <b style="color:red">6 </b>
+          <% if @count_feedback && @count_feedback.count > 0 %>
+            <b style="color:red" id="count_noti"> 
+              <%= @count_feedback.count %>
+              <%= hidden_field_tag :user_counted,
+                @count_feedback.count, id: "user_countd_id" %>
+            </b>
+          <% end %>
           Notification
           <ul class="dropdown-menu">
-            <li><a href="#">HTML</a></li>
-            <li><a href="#">CSS</a></li>
-            <li><a href="#">JavaScript</a></li>
+            <% unless @list_feedback.blank? %>
+              <% @list_feedback.each do |c| %>
+                <li>
+                  <%= link_to "#",
+                    data: {toggle: "modal", target: "#modalapp_#{c.id}"},
+                    class: "up_user_watch", id: "closemodal_#{c.id}" do %>
+                    <span style="color:blue">
+                      Admin acceptd -
+                      <%= c.title %> 
+                    </span>
+                  <% end %>
+                  <%= hidden_field_tag :ar_id, c.id, class: "ar_id" %>
+                </li>
+              <% end %>
+            <% else %>
+            <li>
+              No Notification
+            </li>
+            <% end %>
           </ul>
         </a>
+      </li>
+      <li>
+        <%= link_to list_article_care_path do %>
+          <i class="glyphicon glyphicon-th-list"></i> Articles friend
+        <% end %>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
